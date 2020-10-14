@@ -27,7 +27,7 @@ public class Rewind : MonoBehaviour
     void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
-        stage = new ObjectStage();
+        //stage = new ObjectStage();
         anim = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
         mc = GetComponent<MovementController>();
@@ -120,26 +120,27 @@ public class Rewind : MonoBehaviour
     //恢复正常时间线
     public void Restore()
     {
+        mc.faceDirection = stage.faceDirection;
+        anim.enabled = true;
+        //rb.simulated = true;
+
+
         //再绑定回去
         spriteRenderer = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
         mc = GetComponent<MovementController>();
 
-        mc.faceDirection = stage.faceDirection;
-        anim.enabled = true;
-        rb.simulated = true;
-
         //spriteRenderer.color = forwardColor;
 
-        isRewinding = false;
+        //isRewinding = false;
     }
 
     void InstantiatePrefab(){
         //若从来没有被实例化 则实例化逆向时间线对象
         rewindCharacter = Instantiate(rewindCharacter);
         rewindCharacter.name = "reversedCharacter";
-        rewindCharacter.transform.position = rb.transform.position;
+        rewindCharacter.transform.position = this.transform.position;
 
         //将回溯所绑定的元素绑定到reverse_character上
         spriteRenderer = rewindCharacter.GetComponent<SpriteRenderer>();

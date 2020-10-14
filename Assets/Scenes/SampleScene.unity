@@ -4415,6 +4415,18 @@ PrefabInstance:
       propertyPath: m_UsedByEffector
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2585880133257807175, guid: 281fce9cbf78c5d4491ba057089f5d6d, type: 3}
+      propertyPath: m_Offset.y
+      value: -0.7020006
+      objectReference: {fileID: 0}
+    - target: {fileID: 2585880133257807175, guid: 281fce9cbf78c5d4491ba057089f5d6d, type: 3}
+      propertyPath: m_Radius
+      value: 0.37757444
+      objectReference: {fileID: 0}
+    - target: {fileID: 2585880133257807175, guid: 281fce9cbf78c5d4491ba057089f5d6d, type: 3}
+      propertyPath: m_Offset.x
+      value: -0.0706597
+      objectReference: {fileID: 0}
     - target: {fileID: 2585880133257807192, guid: 281fce9cbf78c5d4491ba057089f5d6d, type: 3}
       propertyPath: m_Offset.y
       value: 0.020228207
