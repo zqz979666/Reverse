@@ -11,7 +11,7 @@ public class MovementController : MonoBehaviour
     public Animator anim;
     public LayerMask ground;
     public Collider2D col;
-    public float faceDirection;
+    public float faceDirection = 1f;
     // Start is called before the first frame update
     void Start()
     {
@@ -51,6 +51,8 @@ public class MovementController : MonoBehaviour
         {
             //控制角色朝向
             transform.localScale = new Vector3(faceDirection,1,1);
+        } else {
+            faceDirection = 1;
         }
 
 

@@ -15,6 +15,7 @@ public class Rewind : MonoBehaviour
 
     private bool isLast = false;//是否已经读取到了栈尾的记录
     private bool isInstantiated = false;//是否已经被实例化了
+    private bool hasRewinded = false;
 
     SpriteRenderer spriteRenderer;
     ObjectStage stage;
@@ -42,9 +43,11 @@ public class Rewind : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKey(KeyCode.Q) && isRewinding==false)
+        if(Input.GetKey(KeyCode.Q) && !isRewinding && !hasRewinded)
         {  
             isRewinding = true;
+            hasRewinded = true;
+            Debug.Log("开始回溯...");
             if(!isInstantiated){
                 isInstantiated = true;
                 InstantiatePrefab();
@@ -67,7 +70,7 @@ public class Rewind : MonoBehaviour
                 Restore();
             }
         }
-        else{
+        else if(!hasRewinded){
             //Debug.Log("存储数据");
             SaveData();
         }
@@ -82,7 +85,8 @@ public class Rewind : MonoBehaviour
         Stage.sprite = spriteRenderer.sprite;//精灵
         Stage.faceDirection = mc.faceDirection;//朝向
         Stage.velocity = rb.velocity;//速度
-        //Debug.Log(Stage.sprite);
+        
+        Debug.Log("Current faceDirection:" + Stage.faceDirection);
         RewindData.Push(Stage);
     }
 
@@ -108,8 +112,8 @@ public class Rewind : MonoBehaviour
     void ShowData(ObjectStage currentStage)
     {
         //Debug.Log("展示回溯");
-        rb.simulated = false;//关闭物理引擎
-        anim.enabled = false;//停止动画播放
+        //rb.simulated = false;//关闭物理引擎
+        //anim.enabled = false;//停止动画播放
 
         rewindCharacter.transform.position = currentStage.position;
         spriteRenderer.sprite = currentStage.sprite;
@@ -120,16 +124,20 @@ public class Rewind : MonoBehaviour
     //恢复正常时间线
     public void Restore()
     {
-        mc.faceDirection = stage.faceDirection;
-        anim.enabled = true;
+        //mc.faceDirection = stage.faceDirection;
+        //anim.enabled = true;
         //rb.simulated = true;
+        Debug.Log("回溯完成，恢复中...");
 
+        //终于搞清楚人物会消失的原因了 scale改变后它的x向量并没有恢复，因此在这里恢复
+        //直接恢复为(1,1,1),因为人物一开始就是(1,1,1)
+        rewindCharacter.transform.localScale = new Vector3(1, 1, 1);
 
-        //再绑定回去
-        spriteRenderer = GetComponent<SpriteRenderer>();
-        anim = GetComponent<Animator>();
-        rb = GetComponent<Rigidbody2D>();
-        mc = GetComponent<MovementController>();
+        //不用再绑定回去，直接结束使用Rewind功能
+        // spriteRenderer = GetComponent<SpriteRenderer>();
+        // anim = GetComponent<Animator>();
+        // rb = GetComponent<Rigidbody2D>();
+        // mc = GetComponent<MovementController>();
 
         //spriteRenderer.color = forwardColor;
 
@@ -141,12 +149,15 @@ public class Rewind : MonoBehaviour
         rewindCharacter = Instantiate(rewindCharacter);
         rewindCharacter.name = "reversedCharacter";
         rewindCharacter.transform.position = this.transform.position;
+        if(rewindCharacter){
+            Debug.Log("逆转角色创建成功！");
+        }
 
         //将回溯所绑定的元素绑定到reverse_character上
         spriteRenderer = rewindCharacter.GetComponent<SpriteRenderer>();
         anim = rewindCharacter.GetComponent<Animator>();
         rb = rewindCharacter.GetComponent<Rigidbody2D>();
-        mc = rewindCharacter.GetComponent<MovementController>();
+        //mc = rewindCharacter.GetComponent<MovementController>();
         
     }
 }
