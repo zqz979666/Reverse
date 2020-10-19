@@ -9,4 +9,5 @@ public class ObjectStage
     public Vector3 velocity { get; set; }//速度
     public Sprite sprite { get; set; }//精灵
     public float faceDirection { get; set; }//朝向
+    public int currentFrame {get; set;}//尝试用帧而不是用时间戳来记录
 }

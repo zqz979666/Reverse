@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//控制正向角色的MovementController，使用Rewind中的bool来控制操控哪一个
 public class MovementController : MonoBehaviour
 {
 
@@ -12,17 +13,26 @@ public class MovementController : MonoBehaviour
     public LayerMask ground;
     public Collider2D col;
     public float faceDirection = 1f;
+
+    Rewind r;
     // Start is called before the first frame update
     void Start()
     {
-        
+        //获取正向角色身上绑定的Rewind脚本
+        r = GetComponent<Rewind>();
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        Movement();
-        SwitchAnim();
+        //只有当没有正向展示或者逆向展示的时候才能控制正向角色
+        //即游戏开始到进入逆转门之前的这一段时间
+        if(!r.isForwardDisplay && !r.isRewindDisplay)
+        {
+            Movement();
+            SwitchAnim();    
+        }
+        
     }
 
     //控制移动的函数

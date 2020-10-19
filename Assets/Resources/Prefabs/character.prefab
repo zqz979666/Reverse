@@ -18,7 +18,7 @@ GameObject:
   - component: {fileID: 5576526040292871161}
   m_Layer: 0
   m_Name: character
-  m_TagString: Untagged
+  m_TagString: forwardCharacter
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -204,3 +204,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isRewinding: 0
+  isFinished: 0
+  isForwardDisplay: 0
+  isRewindDisplay: 0
+  currentFrame: 0
